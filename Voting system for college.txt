@@ -1,0 +1,33 @@
+Voting system for college
+1 - signup/sign in--voter 
+2 - list of candidate
+3 - voter can vote once
+4 - live vote counts with candidate list
+5 - candidate voting screen
+6 - one admin who has access to add candidate
+7 - forget password/reset password
+8 - admin and candidate can't vote
+
+Routes-
+
+Auth->
+       /signup--Post
+       /login---Post
+Voting->
+      /candidates-list---GET
+      /vote/:candidateID---POST
+Counts-->
+     /vote-counts---GET
+Profile-->
+     /profile----GET
+     /profile/password---PUT
+ADMIN--->
+     /candidates----POST
+     /candidates/:candidateId-----PUT(to update the candidate)
+     /candidate/:candidateId------DELETE
+
+
+
+
+
+
