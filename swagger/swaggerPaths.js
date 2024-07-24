@@ -47,6 +47,30 @@ module.exports = {
                     }
                 }
             }
+        },
+        '/add-candidate': {
+            post: {
+                tags: ['AddCandidate'],
+                description: 'Add Candidate',
+                operationId: 'Add Candidate',
+                requestBody: {
+                    content: {
+                        'application/json': {
+                            schema: {
+                                $ref: '#/components/schemas/AddCandidate'
+                            }
+                        }
+                    }
+                },
+                responses: {
+                    '200': {
+                        description: 'Add Candidate up successfully'
+                    },
+                    '400': {
+                        description: 'Bad request'
+                    }
+                }
+            }
         }
     }
 };

@@ -1,3 +1,4 @@
+const { addCandidate } = require("../controllers/candidateController");
 
 module.exports = {
     components: {
@@ -42,7 +43,30 @@ module.exports = {
                     },
                 },
                 required: ['email', 'password', 'role']
-            }
+            },
+
+            AddCandidate: {
+                type: 'object',
+                properties: {
+                    candidateName: {
+                        type: 'string',
+                        description: 'fullname of candidate'
+                    },
+                    email: {
+                        type: 'string',
+                        description: 'email of candidate'
+                    },
+                    age: {
+                        type: 'string',
+                        description: 'age of candidate'
+                    },
+                    mobileNo: {
+                        type: 'number',
+                        description: 'mobile number of candidate'
+                    }
+                },
+                required: ['email', 'candidateName', 'age', 'mobileNo']
+            },
         }
     }
 };

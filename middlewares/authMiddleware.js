@@ -1,21 +1,31 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
 
 const jwtAuthMiddleware = (req, res, next) => {
     const authHeader = req.headers.authorization
     if (!authHeader) {
-        return res.status(401).json({ error: "Invalid token" });
+        res.status(401).json({ error: "Invalid token" });
     }
     const token = authHeader.split(' ')[1];
-    if (!token) return res.statu
-    s(401).json({ error: "Unauthorized" });
+
+    if (!token) res.status(401).json({ error: "Unauthorized" });
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        const decoded = jwt.verify(token, process.env.USER_SECRET)
         req.user = decoded
         next()
 
     } catch (error) {
-        res.status(401).json({ error: "Unauthorized" })
+        console.error('JWT Verification Error:', error?.message);
+        res.status(401).json({ error: "Unauthorized123", message: error?.message })
     }
 }
 
-module.exports = jwtAuthMiddleware;
+const checkRole = (roles) => (req, res, next) => {
+    if (!roles.includes(req.user?.userData?.role)) {
+        return res.status(401).json({ message: "User not allowed" });
+    }
+    next();
+};
+
+module.exports = { jwtAuthMiddleware, checkRole };

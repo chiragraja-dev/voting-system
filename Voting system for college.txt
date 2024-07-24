@@ -7,15 +7,23 @@ Voting system for college
 6 - one admin who has access to add candidate
 7 - forget password/reset password
 8 - admin and candidate can't vote
+9 - email after every vote of respectively 
 
 Routes-
+
+
 
 Auth->
        /signup--Post
        /login---Post
 Voting->
+      /add-candidates---Post
+      /update-candidate --put
+      /get-candidate----get
+      /candidate
       /candidates-list---GET
       /vote/:candidateID---POST
+
 Counts-->
      /vote-counts---GET
 Profile-->

@@ -1,6 +1,6 @@
 const Auth = require('../models/auth');
 const { generateToken } = require("../utils/generateToken");
-// const comparePassword = require("../models/auth")
+const comparePassword = require("../models/auth")
 
 const signup = async (req, res) => {
     const { fullName, email, password, role } = req.body;
@@ -31,13 +31,14 @@ const login = async (req, res) => {
         }
         const payload = { id: user?.id, role }
         const token = generateToken(payload)
+
         if (user.role == role) {
             res.status(200).json(({ message: "login successfully as admin ", token }))
         } else {
             res.status(200).json(({ message: "login successfully", token }))
         }
     } catch (error) {
-        console.log(error?.message)
+
         res.status(400).json(({ message: "something went wrong", error: error?.message }))
 
     }
