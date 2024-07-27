@@ -8,7 +8,6 @@ const jwtAuthMiddleware = (req, res, next) => {
         res.status(401).json({ error: "Invalid token" });
     }
     const token = authHeader.split(' ')[1];
-
     if (!token) res.status(401).json({ error: "Unauthorized" });
     try {
         const decoded = jwt.verify(token, process.env.USER_SECRET)
@@ -16,7 +15,6 @@ const jwtAuthMiddleware = (req, res, next) => {
         next()
 
     } catch (error) {
-        console.error('JWT Verification Error:', error?.message);
         res.status(401).json({ error: "Unauthorized123", message: error?.message })
     }
 }

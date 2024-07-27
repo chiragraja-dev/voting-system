@@ -14,7 +14,7 @@ const signup = async (req, res) => {
         }
         user = new Auth({ fullName, email, password });
         await user.save();
-        const payload = { id: user.id, role };
+        const payload = { id: user.id, role, email };
         const token = generateToken(payload);
         res.status(200).json({ message: 'signup successfully by email id ' + user.email, token });
     } catch (error) {
@@ -27,9 +27,12 @@ const login = async (req, res) => {
         const { email, password, role } = req.body
         const user = await Auth.findOne({ email })
         if (!user || !(await user.comparePassword(password))) {
-            res.status(401).json({ error: "Invalid user or password" })
+            return res.status(401).json({ error: "Invalid user or password" })
         }
-        const payload = { id: user?.id, role }
+        if (!role) {
+            return res.status(400).json({ message: "Role is required" })
+        }
+        const payload = { id: user?.id, role, email }
         const token = generateToken(payload)
 
         if (user.role == role) {
@@ -38,9 +41,7 @@ const login = async (req, res) => {
             res.status(200).json(({ message: "login successfully", token }))
         }
     } catch (error) {
-
         res.status(400).json(({ message: "something went wrong", error: error?.message }))
-
     }
 
 }

@@ -11,28 +11,27 @@ Voting system for college
 
 Routes-
 
-
-
 Auth->
-       /signup--Post
-       /login---Post
-Voting->
-      /add-candidates---Post
-      /update-candidate --put
-      /get-candidate----get
-      /candidate
-      /candidates-list---GET
-      /vote/:candidateID---POST
+       [/signup--Post]---DONE
+       [/login---Post]---DONE
+Candidate-> 
+****************ADMIN*********************
+     [/add-candidates---Post]----DONE
+     [/update-candidate --put]----DONE
+     [/delete-candidate----DELETE]------DONE
+***************VOTER--------------------
+     [/get-candidateByEmail ---get]--DONE
+     [/get-candidate----get]----------------DONE
 
-Counts-->
+vote-->
+     /vote/:candidateByEmail---POST
      /vote-counts---GET
-Profile-->
-     /profile----GET
-     /profile/password---PUT
-ADMIN--->
-     /candidates----POST
-     /candidates/:candidateId-----PUT(to update the candidate)
-     /candidate/:candidateId------DELETE
+     /
+VOTER Profile-->
+     /voter/profile----GET
+     /voter/update-profile---PUT
+
+
 
 
 
