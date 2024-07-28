@@ -2,7 +2,16 @@ const Vote = require("../models/vote");
 const Candidate = require("../models/candidate");
 const Auth = require('../models/auth')
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail', // You can use other services like 'yahoo', 'outlook', etc.
+    auth: {
+        user: process.env.EMAIL_USER, // Your email address
+        pass: process.env.EMAIL_PASS // Your email password or app-specific password
+    }
+});
 
 const VoteForCandidate = async (req, res) => {
     const { candidateEmail } = req.body;
@@ -24,6 +33,21 @@ const VoteForCandidate = async (req, res) => {
         }
         const vote = new Vote({ voterEmail: voterEmail, candidateEmail: candidateEmail })
         const data = await vote.save()
+
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: voterEmail,
+            subject: 'Vote Confirmation',
+            text: `Thank you for voting for ${candidate.candidateName}.`
+        };
+        console.log(data)
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.error("Error sending email: ", error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
         res.status(200).json({ message: "vote added successfully" })
     } catch (error) {
         res.status(400).json({ error: "Server error", error: error.message });
